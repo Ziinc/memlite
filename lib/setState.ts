@@ -1,4 +1,3 @@
-
 export interface SetState {
   viewCard: (id: number) => void;
   resetViewer: () => void;
@@ -13,7 +12,7 @@ export default function (core: any): SetState {
     },
     resetViewer() {
       core.db.run("update state set viewingId=null");
-    }
+    },
   };
 
   // for every handler declared, wrap the handler in a function that calls core.deps.pushState
@@ -21,10 +20,10 @@ export default function (core: any): SetState {
   let wrapped;
   wrapped = {};
   for (const prop in handlers) {
-    wrapped[prop] = args => {
+    wrapped[prop] = (args) => {
       handlers[prop](args);
       if (core.deps.pushState) {
-        core.deps.pushState(core.state);
+        core._internals.pushState(core.state);
       }
     };
   }

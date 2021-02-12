@@ -6,9 +6,11 @@ describe("init", function () {
   it("before initialization, no other keys are set", async function () {
     assert.ok("init" in Core);
     assert.rejects("state" in Core);
+    assert.rejects("db" in Core);
     core = await Core.init();
     assert.ok("state" in core);
     assert.ok("init" in core);
+    assert.ok("db" in core);
   });
   it("adds access to _internals when internals option is true", async function () {
     core = await Core.init({}, { internals: true });
