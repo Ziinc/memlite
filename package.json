@@ -1,0 +1,24 @@
+{
+  "name": "memlite",
+  "version": "0.1.0",
+  "description": "",
+  "main": "lib/index.js",
+  "scripts": {
+    "build": "rm -rf dist && tsc",
+    "watch": "tsc -watch -p tsconfig.json",
+    "pretest": "npm run build",
+    "test": "mocha dist/test --recursive",
+    "test-watch": "mocha dist/test --recursive --watch --watch-files ./lib,./test"
+  },
+  "author": "Lee Tze Yiing <ty@tzeyiing.com> (https://www.tzeyiing.com)",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/mocha": "^7.0.2",
+    "@types/node": "^13.13.36",
+    "typescript": "^3.9.7",
+    "mocha": "^7.2.0"
+  },
+  "dependencies": {
+    "sql.js": "^1.4.0"
+  }
+}
