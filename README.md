@@ -2,12 +2,16 @@
 
 Memlite is a SQLite state management library. It can be used to create, manage, and manipulate a state tree.
 
+**WARNING UNRELEASED AND UNSTABLE**
+
 ## Features
 
 - Platform/framework agnostic.
 - SQL state management (using SQLite).
 
 ## Documentation
+
+TODO
 
 ## Developer
 
