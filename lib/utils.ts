@@ -5,7 +5,7 @@ export default {
     const pattern = RegExp("^(\\d{13})-(.+)", "g");
     return pattern.test(toCheck);
   },
-  setDeep
+  setDeep,
 };
 
 /**
@@ -36,4 +36,32 @@ export function setDeep(obj, path, value, setrecursively = true) {
     return acc[key];
   }, obj);
   return obj;
+}
+
+export function matrixToObjects(columns, values) {
+  values = values.map((row) => {
+    return columns.reduce((acc, col, idx) => {
+      acc[col] = row[idx];
+      return acc;
+    }, {});
+  });
+  // convert nested dot keys to nested objects
+  values = values.map((obj) => buildNestedObjects(obj));
+  return values;
+}
+
+// // split dotkeys and set the value
+export function buildNestedObjects(obj) {
+  let result = {};
+  for (let [key, value] of Object.entries(obj)) {
+    if (key.includes(".")) {
+      // deep set the value
+      const path = key.split(".");
+      result = setDeep(result, path, value, true);
+    } else {
+      // do nothing
+      result[key] = value;
+    }
+  }
+  return result;
 }
