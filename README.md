@@ -82,13 +82,75 @@ The state table is simply a SQL table named "state" that is automatically define
 
 A feature is made up of the following elements:
 
-1. **namespace** (required): a namespace on the `mem` to access this feature
-2. **schema** (optional): an sql schema related to this feature. Can include table definitions, indexes, triggers, etc. Expects valid SQL statements.
-3. **context** (optional): a function that accepts the `mem` and returns an object of **context handlers** that will interact with database and/or perform computations.
+1. **namespace** (string, required): a namespace on the `mem` to access this feature
+3. **schema** (string, optional): an sql schema related to this feature. 
+4. **context** (function => object, optional): a function that accepts the `mem` and returns an object of **context handlers** that will interact with database and/or perform computations.
 
-#### Writing Context Handlers
+#### Namespaces
+Namespaces allows you to register the context onto a namespace on the `mem` object. This allows for code organization and feature segregation.
 
-Context handlers are simply functions that implement business logic. These functions have access to the `mem`, allowing database reading/writing as well as accessing other context handlers.
+For example, we can register a feature on the `mem.hello` namespace.
+
+```js
+memlite.init({
+  features: [{ namespace: "hello" }]
+})
+```
+
+#### Schema
+An sql schema can be provided for this feature. This can include one or more table definitions, indexes, triggers, etc. This string needs to be valid SQL statements, as there is no SQL syntax checking performed by this library.
+
+
+For example, on our `mem.todos` namespace, we can create multiple tables.
+
+```js
+const schema = `
+CREATE TABLE todos (
+	title TEXT,
+	description TEXT,
+	user_id INTEGER NOT NULL
+);
+CREATE TABLE todos_hierarchy (
+	parent_id INTEGER NOT NULL,
+	child_id INTEGER NOT NULL
+);
+`
+
+memlite.init({
+  features: [{ namespace: "todos", schema }]
+})
+```
+In this example, we will create two tables, `todos` and `todos_hierarchy`. We can use `todos_hierarchy` to define task hierarchy in our `todos` feature.
+
+When the database is initiated, the schemas are executed in sequential order as given in the `features` array. As such, schemas that depend on another feature's schema (such as triggers) should be placed after dependencies in order to get executed later.
+
+#### Context
+A context is a function that accepts the `mem` object and returns an object of **context handlers**. 
+
+Context handlers are functions that implement business logic. As these functions have access to `mem`, it allows for database reading/writing as well as accessing other context handlers.
+
+You can also define a context handler that does not interact with the database, such as performing async datafetching.
+
+##### Example
+In this example, we will query the `todos` table to list all todos with their `rowid` that SQLite automatically creates. It is on the `mem.todos` namespace, hence we will call the `list_todos()` function to obtain the results from the database directly.
+```js
+const schema = `
+CREATE TABLE todos (
+	title TEXT
+);
+`
+const context = mem => ({
+  list_todos(){
+    return mem._db.run("SELECT rowid, title FROM todos");
+  }
+})
+
+let mem = memlite.init({
+  features: [{ namespace: "todos", schema }]
+})
+
+mem.todos.list_todos();
+```
 
 ## Developer
 
