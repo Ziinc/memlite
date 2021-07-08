@@ -4,8 +4,12 @@
     "target": "es6",
     "outDir": "dist",
     "lib": ["es6", "dom"],
+    // "strict": true,
     "sourceMap": true,
-    
+    "declaration": true,
+    // "allowSyntheticDefaultImports": true,
+    // "experimentalDecorators": true,
+    // "emitDecoratorMetadata": true,
     /* Additional Checks */
     // "noImplicitAny": true,
     // "noImplicitReturns": true, /* Report error when not all code paths in function return a value. */

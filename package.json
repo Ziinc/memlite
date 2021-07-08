@@ -1,9 +1,9 @@
 {
   "name": "memlite",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "",
-  "main": "dist/index",
-  "typings": "dist/index",
+  "main": "dist/lib/index",
+  "typings": "dist/lib/index",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "tsc -watch -p tsconfig.json",
