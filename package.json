@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "dist/index.js",
+  "typings": "dist/index",
   "scripts": {
     "build": "rm -rf dist && tsc",
     "watch": "tsc -watch -p tsconfig.json",
