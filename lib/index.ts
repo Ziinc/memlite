@@ -1,4 +1,4 @@
-import initSqlJs from "sql.js";
+import initSqlJs from "sql.js/dist/sql-wasm.js";
 import internals from "./internals";
 export type App = {
   init: (initArgs?, Options?) => Promise<App>;
