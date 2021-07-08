@@ -8,7 +8,7 @@ export type App = {
   [k: string]: ContextResult | any;
 };
 type initArgs = {
-  
+  wasmFile?: string;
   features: Feature[];
   stateColumns: string[];
   buildState: (Object, App) => Object;
@@ -45,7 +45,9 @@ export default {
       acc[f.namespace] = f.context;
       return acc;
     }, {});
-    return initSqlJs()
+    return initSqlJs({
+      locateFile: args?.wasmFile ? () => args?.wasmFile : undefined,
+    })
       .then((SQL: any): any => new SQL.Database())
       .then((db) => {
         // update the schema
