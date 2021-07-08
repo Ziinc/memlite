@@ -8,6 +8,7 @@ export type App = {
   [k: string]: ContextResult | any;
 };
 type initArgs = {
+  
   features: Feature[];
   stateColumns: string[];
   buildState: (Object, App) => Object;
