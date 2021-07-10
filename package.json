@@ -1,10 +1,13 @@
 {
   "name": "memlite",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "description": "",
   "main": "dist/lib/index",
   "typings": "dist/lib/index",
-  "files": ["dist/lib", "dist/sql.wasm"],
+  "files": [
+    "dist/lib",
+    "dist/sql.wasm"
+  ],
   "scripts": {
     "build": "rm -rf dist/* && mkdir -p dist &&  cp ./node_modules/sql.js/dist/sql-wasm.wasm ./dist/sql.wasm && tsc",
     "watch": "tsc -watch -p tsconfig.json",
@@ -21,6 +24,6 @@
     "typescript": "^4.1.5"
   },
   "dependencies": {
-    "sql.js": "^1.4.0"
+    "sql.js": "1.5.0"
   }
 }
