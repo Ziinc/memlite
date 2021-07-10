@@ -6,7 +6,7 @@
   "typings": "dist/lib/index",
   "files": ["dist/lib", "dist/sql.wasm"],
   "scripts": {
-    "build": "rm -rf dist && tsc && cp ./node_modules/sql.js/dist/sql-wasm.wasm ./dist/sql.wasm",
+    "build": "rm -rf dist/* && mkdir -p dist &&  cp ./node_modules/sql.js/dist/sql-wasm.wasm ./dist/sql.wasm && tsc",
     "watch": "tsc -watch -p tsconfig.json",
     "pretest": "npm run build",
     "test": "mocha dist/test --recursive",
