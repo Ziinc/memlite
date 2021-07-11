@@ -5,6 +5,7 @@
     "outDir": "dist",
     "lib": ["es6", "dom"],
     // "strict": true,
+    "allowJs": true,
     "sourceMap": true,
     "declaration": true,
     // "allowSyntheticDefaultImports": true,
