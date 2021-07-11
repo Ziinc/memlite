@@ -1,11 +1,11 @@
 import * as assert from "assert";
-import Core, { App } from "../lib";
+import Core from "../lib";
 
 describe("init", function () {
-  let core: App;
-  beforeEach(function(){
-    core = null
-  })
+  let core;
+  beforeEach(function () {
+    core = null;
+  });
   it("before initialization, no other keys are set", async function () {
     assert.ok("init" in Core);
     assert.ok("state" in Core === false);
@@ -21,12 +21,11 @@ describe("init", function () {
     assert.ok(Object.keys(core._internals).length >= 0);
   });
 
-  it("can init with an wasm file location", async function(){
+  it("can init with an wasm file location", async function () {
     core = await Core.init({
-      wasmFile: "../sql.wasm"
+      wasmFile: "../sql.wasm",
     });
-    console.log(core.state)
     assert.ok("init" in core);
     assert.ok("state" in core === false);
-  })
+  });
 });
