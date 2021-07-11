@@ -78,7 +78,6 @@ export default {
         // return the final core object as a proxy
         const proxy = new Proxy(this, {
           get(target, name: string, receiver) {
-            let rv = Reflect.get(target, name, receiver);
             // db is being accessed
             if (name === "_db") return db;
 
@@ -101,7 +100,7 @@ export default {
               return internals(receiver);
             }
 
-            return rv;
+            return Reflect.get(target, name, receiver);;
           },
         });
 
