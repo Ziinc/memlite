@@ -45,6 +45,7 @@ export default {
       acc[f.namespace] = f.context;
       return acc;
     }, {});
+
     return initSqlJs({
       locateFile: args?.wasmFile ? () => args?.wasmFile : undefined,
     })
@@ -83,11 +84,15 @@ export default {
 
             // state is being accessed
             if (name === "state") {
-              let sql = receiver._db.prepare(`select * from state;`);
-              const partialState = sql.getAsObject([]);
-              delete partialState.id;
+              let sql = db.prepare(`select * from state;`);
 
-              return args.buildState(partialState, receiver);
+              const columns = sql.getColumnNames().filter(v => v !== "id");
+              let partial = {}
+              for (let c of columns) {
+                partial[c] = (() => sql.getAsObject([])?.[c])
+              }
+
+              return args.buildState(partial, receiver);
             }
 
             // one of the features
